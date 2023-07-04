@@ -1,0 +1,12 @@
+Cari studenti  
+
+qui sotto potete trovare i link ai file da analizzare per questa sessione estiva e il report da seguire per presentare i risultati.  
+
+Per il file malware.exe dovete fare analisi statica e dinamica di base, analisi del traffico di rete e reverse engineering della funzione sub_4835DC. Per maldoc.docx dove dovete fare l'analisi statica. 
+
+Link ai file malevoli: malware.zip 
+Link al report: report
+
+La password è infected.
+
+Federica
