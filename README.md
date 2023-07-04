@@ -16,3 +16,7 @@ Possiamo vedere l'impacchettamento tramite UPX anche aprendo il file con pestudi
 Se vogliamo un'ulteriore conferma la possiamo trovare guardando il nome delle sezioni dell'eseguibile ed osservando nomi come UPX0 e UPX1:
 
 [![sezioni file in pestudio](./Screenshots/pestudio-sections.png)]()
+
+Spacchettiamo ora l'eseguibile utilizzando UPX e apriamo la versione spacchettata utilizzando nuovamente pestudio:
+
+[![Seconda apertura con pestudio](./Screenshots/seconda-apertura-pestudio.png)]()
