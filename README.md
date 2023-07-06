@@ -27,7 +27,7 @@ Spacchettiamo ora l'eseguibile utilizzando UPX e apriamo la versione spacchettat
 
 [![Seconda apertura con pestudio](./Screenshots/seconda-apertura-pestudio.png)]()
 
-Vediamo che il campo signature è vuoto. La data di compilazione sembra essere domenica 15 aprile 2012.
+Vediamo che il campo signature è vuoto. La data di compilazione sembra essere domenica 15 aprile 2012. Utilizzando il programma ExeInfo PE riusciamo a vedere che la signature riporta [DA FARE]
 
 Nella lista delle sezioni troviamo la sezione tls, la sua presenza potrebbe indicare che il malware ha incluso un controllo di anti-debug, questa cosa merita controlli approfonditi che faremo in seguito. E' presente anche una sezione risorse.
 
@@ -43,7 +43,11 @@ Non è possibile visionare gli imports effettuati dal programma usando pestudio.
 
 [![Stringhe in pestudio](./Screenshots/pestudio-strings.png)]()
 
-Troviamo una lunga lista di stringhe che pestudio ci segnala come potenziali indicatori di un comportamento malevolo. Quello che possiamo vedere prima di tutto è che il malware 
+Troviamo una lunga lista di stringhe che pestudio ci segnala come potenziali indicatori di un comportamento malevolo. Quello che possiamo vedere prima di tutto è che il malware, a giudicare da alcune stringhe che costituiscono il nome delle API di Windows e di registri, piò gestire connessioni di rete, recuperare alcune informazioni sull'hardware della macchina infetta, prendere informazioni sui monitor e sulla finestra correntemente visualizzata (e cambiarla), modificare le chiavi del registro di windows, creare/distruggere processi, leggere e scrivere la clipboard. Tra le stringhe ci sono anche diversi riferimenti a "Shell traywnd" ovvero alla barra di windows. Altri riferimenti sono al processo Task Manager, al Prompt dei comandi e a Internet Explorer.
+Il malware contiene anche un lungo elenco di tasti della tastiera (ad esempio Left, Right, Shift, [ESC], [F1]...[F8], [DEL], [INS]) che ci può far pensare ad una tastiera virtuale o più probabilmente ad una funzionalità di keylogging.
+Un'altra cosa degna di interesse è la presenza di diverse format-strings che fanno pensare ad un codice in C/C++ o Delphi, un ulteriore indizio di ciò è la presenza tra le stringhe di tipi di variabili quali Boolean, Integer, Byte, Word.
+E' poi presente una lunga lista di DLL quali kernel32, USER32, uxtheme, DWMAPI.
+Compare anche un elenco di tutti i caratteri per la codifica Base64 e ci sono molte stringhe che sembrano pezzi di stringhe codificate.
 
 
 
@@ -76,7 +80,7 @@ In questa sezione dovete spiegare il comportamento della funzione assegnata dete
 
 # IL DOCUMENTO MALEVOLO
 ## Analisi statica
-In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings, exiftool, e yara Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologi di documento. Per esempio ,se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
+In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings, exiftool, e yara Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologi di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
  
 ## Analisi del codice malevolo contenuto nel documento
  
