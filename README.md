@@ -43,6 +43,7 @@ Ci sono anche API utili per le connessioni di rete e per l'allocazione della mem
 
 [TODO: cercare le API qui riportate https://moodledidattica.univr.it/pluginfile.php/1231027/course/section/114897/reverse-engineering-malicious-code-tips.pdf]
 
+---
 ### Stringhe
 
 [![Stringhe in pestudio](./Screenshots/pestudio-strings.png)]()
@@ -232,3 +233,15 @@ In questa sezione dovete spiegare i risultati dell’analisi effettuata con stri
 ## OK Analisi del codice malevolo contenuto nel documento
  
 In questa sezione dovete spiegare il comportamento dell’eventuale codice malevolo contenuto all’interno del documento.
+<style>
+@media print, (overflow-block: paged) or (overflow-block: optional-paged)
+{
+  hr
+  {
+    page-break-after: always; /* CSS 2 */
+         break-after: region; /* CSS 3+ */
+    /* minimal layout disruption: */
+    height: 0.1mm; visibility: hidden;
+  }
+}
+</style>
