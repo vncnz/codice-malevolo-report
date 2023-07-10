@@ -3,6 +3,8 @@ Progetto d'esame per Codice Malevolo AA 2022/2023 - Matricola VR457811
 
 # Malware
 
+Come vedremo il malware analizzato crea un file eseguibile sulla macchina infettata e lo esegue, impostando anche la macchina affinché lo esegua ad ogni riavvio. Raccoglie informazioni sulla macchina e sulle sue configurazioni e probabilmente fa sia da keylogger che da punto di accesso e controllo remoto della macchina infetta. Questo farebbe classificare il file malevolo come Trojan, oltre che come keylogger.
+
 ## Analisi statica di base
 
 ### Informazioni generali ed impacchettamento
@@ -43,7 +45,6 @@ Ci sono anche API utili per le connessioni di rete e per l'allocazione della mem
 
 [TODO: cercare le API qui riportate https://moodledidattica.univr.it/pluginfile.php/1231027/course/section/114897/reverse-engineering-malicious-code-tips.pdf]
 
----
 ### Stringhe
 
 [![Stringhe in pestudio](./Screenshots/pestudio-strings.png)]()
@@ -56,10 +57,11 @@ Compare anche un elenco di tutti i caratteri per la codifica Base64 e ci sono mo
 Tra le stringhe vediamo anche una lista di registri di sistema (o pezzi di essi) tra i quali SOFTWARE\Microsoft\Windows\CurrentVersion\Run che può essere usato per l'avvio automatico al boot di qualche risorsa creata dal malware o del malware stesso.
 L'unico indirizzo IP che compare tra le stringhe sembra essere 127.0.0.1, quindi localhost, e non sono stati notati percorsi a file se non quelli ad applicazioni di Windows citati prima.
 Non è presente tra le stringhe alcun URL completo ma compaiono sia "http://" che "www.", indicatori che degli url vengono costruiti ed utilizzati durante il funzionamento.
+Altre stringhe interessanti che sono state trovate nel malware contengono "CaptureWebcam", "ScreenCapture", "SoundCapture", "SetCapture", "GetCapture", "ClientToScreen", "RemoteDesktop", "ActiveOnlineKeylogger", "ActiveOfflineKeylogger", "PortScanAdd", "ScanPorts", "SeShutdownPrivilege", "PowerOff", "CloseServer", "RestartServer". Tutte queste fanno pensare che il malware possa consentire un controllo remoto della macchina avviando un server in locale che attende una connessione dall'esterno.
 
 ### Conclusioni dell'analisi statica
 
-Il malware potrebbe essere un keylogger capace di impostarsi in avvio automatico, creare copie di sé stesso, eseguire screenshots e mandare il tutto ad un endpoint.
+Il malware potrebbe essere un keylogger capace di impostarsi in avvio automatico, creare copie di sé stesso, eseguire screenshots e mandare il tutto ad un endpoint. Un'altra possibilità, alternativa alla prima o parallela ad essa, è che fornisca il controllo remoto della macchina, quest'ultima ipotesi è piuttosto probabile.
 
 ## Analisi dinamica di base
 
@@ -94,11 +96,11 @@ Sono stati trovati anche dei frammenti di chiavi di registro:
 - CurrentVersion
 - System\CurrentControlSet\Services\
 
-Esseguendo l'analisi dinamica con _Process Monitor_ si è visto che in realtà il malware accede ad una quantità immensa di registri, possiamo vederne una piccola parte nel seguente screenshot:
+Esseguendo l'analisi dinamica con _Process Monitor_ si è visto che il malware accede molte volte ai registri sopra riportati ed altri, possiamo vederne una parte nel seguente screenshot:
 
 [![RegOpenKey](./Screenshots/procmon-regopenkey.png)]()
 
-La lista delle chiavi create è per fortuna molto più breve:
+La lista delle chiavi create è molto più breve:
 
 [![RegCreateKey](./Screenshots/procmon-regcreatekey.png)]()
 
@@ -129,6 +131,8 @@ E' stato catturato molto traffico di rete dalla macchina in esame. Filtrando per
 
 [![DNS](./Screenshots/wireshark-dns.png)]()
 
+E' stata catturata attività di rete anche all'indirizzo 0.0.0.0 .
+
 Non vengono effettuate connessioni di tipo SMTP.
 
 [TODO: ricontrollare la configurazione di inetsim e verificare se è corretto che non effettui altre richieste]
@@ -137,7 +141,13 @@ Non vengono effettuate connessioni di tipo SMTP.
 
 [TODO]
 
+---
+---
+---
+
 # IL DOCUMENTO MALEVOLO
+
+Il documento in analisi è un docx privo di macro e contenente una minaccia di tipo DDE che consentirebbe, se il relativo server fosse ancora attivo, il download di un malware sulla macchina della vittima.
 
 # Verifica del formato del file
 
@@ -233,6 +243,8 @@ In questa sezione dovete spiegare i risultati dell’analisi effettuata con stri
 ## OK Analisi del codice malevolo contenuto nel documento
  
 In questa sezione dovete spiegare il comportamento dell’eventuale codice malevolo contenuto all’interno del documento.
+
+
 <style>
 @media print, (overflow-block: paged) or (overflow-block: optional-paged)
 {

