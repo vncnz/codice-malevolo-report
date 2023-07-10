@@ -143,7 +143,9 @@ Non vengono effettuate connessioni di tipo SMTP.
 
 ### Stringhe
 
-[TODO]
+[![strings](./Screenshots/docx-strings.png)]()
+
+Tra le stringhe non troviamo informazioni particolarmente interessanti, in chiaro troviamo solo i nomi e percorsi dei vari file contenuti del docx, gli stessi che vedremo quando elencheremo il contenuto del pacchetto, oltre ad una lunga lista di stringhe incomprensibili.
 
 ### exiftool
 
@@ -154,17 +156,22 @@ Il creatore del file è un anonimo "Windows User".
 Vediamo anche che il file è stato creato (o modificato) nel settembre 2018 ed abbiamo conferma del fatto che si tratta realmente di un docx. La data di modifica dello Zip, invece, non va presa in considerazione in quanto la mezzanotte del primo gennaio 1980 è sicuramente l'interpretazione come data di un dato assente.
 Non abbiamo alcuna indicazione relativa alla localizzazione.
 
-### yara
+### Ricerca di codice VBA
 
-[TODO]
+[![zipdump](./Screenshots/docx-zipdump.png)]()
+[![tree](./Screenshots/docx-tree.png)]()
+[![olevba](./Screenshots/docx-olevba.png)]()
+Come possiamo vedere con i comandi zipdump, tree (dopo la scompattazione) e olevba il docx in esame non contiene macro.
 
-### Altro
+### Altro - Dynamic Data Exchange
 
-[TODO]
+Si potrebbe pensare che il documento non sia quindi malevolo, ma contiene invece un pericolo di tipo diverso. Esiste una vecchia tecnologia Microsoft che consente di eseguire del codice direttamente dall'interno di un documento Office, chiamata Dynamic Data Exchange (DDE). DDE è documentato in MITRE ATT&CK® T1559 ed è un protocollo nato per lo scambio di dati tra applicazioni del pacchetto Microsoft Office. Con le versioni più recenti di Office l'esecuzione di comandi DDE avviene solo dopo una richiesta di conferma all'utente, attenuando il problema legato alla sicurezza, tuttavia l'attaccante può spingere l'utente ad ignorare i messaggi di avviso e lasciare che venga eseguito il codice.
 
-## Analisi del codice malevolo contenuto nel documento
+Procediamo quindi a verificare l'eventuale presenza di comandi DDE con un apposito comando preinstallato in REMnux: msodde.
 
-[TODO]
+[![msodde](./Screenshots/docx-msodde.png)]()
+
+Vediamo così un comando che effettua il download di un software malevolo. L'url _trt.doe.louisiana.gov_ non è purtroppo più raggiungibile e non possiamo quindi analizzare il malware che era previsto dover essere scaricato ed eseguito sulla macchina.
 
 ===================================================
 ===================================================
@@ -192,8 +199,8 @@ In questa sezione dovete spiegare il comportamento della funzione assegnata dete
 
 # IL DOCUMENTO MALEVOLO
 ## Analisi statica
-In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings, exiftool, e yara Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologi di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
+In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings (OK) , exiftool (OK), e yara (MANCA, fatto con msodde) Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologia di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
  
-## Analisi del codice malevolo contenuto nel documento
+## OK Analisi del codice malevolo contenuto nel documento
  
 In questa sezione dovete spiegare il comportamento dell’eventuale codice malevolo contenuto all’interno del documento.
