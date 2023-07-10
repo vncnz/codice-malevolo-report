@@ -139,7 +139,63 @@ Non vengono effettuate connessioni di tipo SMTP.
 
 ## Reverse engineering della funzione sub_4835DC
 
-[TODO]
+Innanzitutto l'intero corpo della funzione, disassemblato e decompilato in C:
+
+```
+void FUN_004835dc(undefined *param_1,undefined *param_2)
+
+{
+  BYTE *lpData;
+  LPCSTR lpValueName;
+  ulong cbData;
+  undefined4 *in_FS_OFFSET;
+  DWORD Reserved;
+  DWORD dwType;
+  undefined4 uStack52;
+  undefined *puStack48;
+  undefined *puStack44;
+  undefined4 uStack40;
+  undefined *puStack36;
+  undefined *puStack32;
+  HKEY run_regkey;
+  undefined *local_c;
+  undefined *local_8;
+  
+  puStack44 = &stack0xfffffffc;
+  puStack32 = (undefined *)0x4835f3;
+  local_c = param_2;
+  local_8 = param_1;
+  FUN_004059cc((int)param_1);
+  puStack32 = (undefined *)0x4835fb;
+  FUN_004059cc((int)local_c);
+  puStack36 = &DAT_00483696;
+  uStack40 = *in_FS_OFFSET;
+  *in_FS_OFFSET = &uStack40;
+  puStack48 = &DAT_0048366a;
+  uStack52 = *in_FS_OFFSET;
+  *in_FS_OFFSET = &uStack52;
+  puStack32 = &stack0xfffffffc;
+  RegOpenKeyA((HKEY)0x80000001,"Software\\Microsoft\\Windows\\CurrentVersion\\Run",&run_regkey);
+  cbData = (ulong)local_c;
+  if (local_c != (undefined *)0x0) {
+    cbData = *(ulong *)(local_c + -4);
+  }
+  cbData = cbData + 1;
+  lpData = FUN_004059dc(local_c);
+  dwType = 1;
+  Reserved = 0;
+  lpValueName = FUN_004059dc(local_8);
+  RegSetValueExA(run_regkey,lpValueName,Reserved,dwType,lpData,cbData);
+  RegCloseKey(run_regkey);
+  *in_FS_OFFSET = uStack52;
+  *in_FS_OFFSET = uStack40;
+  puStack32 = &LAB_0048369d;
+  puStack36 = (undefined *)0x483695;
+  FUN_00405554((int *)&local_c,2);
+  return;
+}
+
+```
 
 Per iniziare a comprendere il codice partiamo dalle righe che contengono chiamate ad API di Windows.
 
@@ -183,6 +239,7 @@ Guardando quest'ultimo valore inizia ad avere un significato il pezzo di codice 
 Questa sequenza di istruzioni serve a "misurare" il valore di lpData ed aggiungerci uno a causa del terminating null byte \00. cbData viene infatti inizializzato al valore di local_c e viene decrementato di 4 (quindi alzato nello stack) di 4 butes alla volta finché viene raggiunto \00.
 
 La funzione FUN_004059dc restituisce il valore passato come parametro se diverso da zero oppure un valore di default. Vediamo che è usata in più punti nella funzione che stiamo analizzando.
+
 ```
 undefined * FUN_004059dc(undefined *param_1)
 
@@ -193,6 +250,8 @@ undefined * FUN_004059dc(undefined *param_1)
   return &DAT_004059e9;
 }
 ```
+
+lpData viene ricavato da local_c che a sua volta deriva da param2 mentre lpValueName viene ricavato da local_8 che a sua volta deriva da param1.
 
 Al di là dei dettagli, possiamo concludere con relativa sicurezza che la funzione `sub_4835DC` si occupa di ricevere in input un nome ed un valore e di scriverli nel registro di Windows alla chiave _HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run_.
 
