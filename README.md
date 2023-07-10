@@ -141,6 +141,61 @@ Non vengono effettuate connessioni di tipo SMTP.
 
 [TODO]
 
+Per iniziare a comprendere il codice partiamo dalle righe che contengono chiamate ad API di Windows.
+
+```
+RegOpenKeyA((HKEY)0x80000001,"Software\\Microsoft\\Windows\\CurrentVersion\\Run",&run_regkey)
+```
+Questa funzione ottiene in run_regkey un handle al registro _HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run_ (cercando nella documentazione troviamo che 0x80000001 = HKEY_CURRENT_USER).
+
+```
+RegSetValueExA(run_regkey, lpValueName, Reserved, dwType, lpData, cbData);
+```
+Cercando la funzione nella documentazione ufficiale Microsoft all'indirizzo https://learn.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regsetvalueexa possiamo comprendere pian piano il significato dei vari parametri.
+```
+LSTATUS RegSetValueExA(
+  [in]           HKEY       hKey,
+  [in, optional] LPCSTR     lpValueName,
+                 DWORD      Reserved,
+  [in]           DWORD      dwType,
+  [in]           const BYTE *lpData,
+  [in]           DWORD      cbData
+);
+```
+
+Nel nostro caso abbiamo sei parametri quindi anche quello opzionale è stato usato.
+
+- run_regkey: è un handle alla chiave di registro, quello che abbiamo ottenuto prima
+- lpValueName: è il nome da dare al valore che vogliamo salvare
+- Reserved: è sempre 0
+- dwType: è un enumerable che indica il tipo di dato che inseriremo nella chiave
+- *lpData: puntatore ai dati che vogliamo salvare
+- cbData: dimensione in bytes (con eventuale byte di fine stringa) del valore da salvare
+
+Guardando quest'ultimo valore inizia ad avere un significato il pezzo di codice precedente:
+```
+  cbData = (ulong)local_c;
+  if (local_c != (undefined *)0x0) {
+    cbData = *(ulong *)(local_c + -4);
+  }
+  cbData = cbData + 1;
+```
+Questa sequenza di istruzioni serve a "misurare" il valore di lpData ed aggiungerci uno a causa del terminating null byte \00. cbData viene infatti inizializzato al valore di local_c e viene decrementato di 4 (quindi alzato nello stack) di 4 butes alla volta finché viene raggiunto \00.
+
+La funzione FUN_004059dc restituisce il valore passato come parametro se diverso da zero oppure un valore di default. Vediamo che è usata in più punti nella funzione che stiamo analizzando.
+```
+undefined * FUN_004059dc(undefined *param_1)
+
+{
+  if (param_1 != (undefined *)0x0) {
+    return param_1;
+  }
+  return &DAT_004059e9;
+}
+```
+
+Al di là dei dettagli, possiamo concludere con relativa sicurezza che la funzione `sub_4835DC` si occupa di ricevere in input un nome ed un valore e di scriverli nel registro di Windows alla chiave _HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run_.
+
 ---
 ---
 ---
