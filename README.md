@@ -27,7 +27,7 @@ Spacchettiamo ora l'eseguibile utilizzando UPX e apriamo la versione spacchettat
 
 [![Seconda apertura con pestudio](./Screenshots/seconda-apertura-pestudio.png)]()
 
-Vediamo che il campo signature è vuoto. La data di compilazione sembra essere domenica 15 aprile 2012. Utilizzando il programma ExeInfo PE riusciamo a vedere che la signature riporta [DA FARE]
+Vediamo che il campo signature è vuoto [TODO: da controllare]. La data di compilazione sembra essere domenica 15 aprile 2012. Utilizzando il programma ExeInfo PE riusciamo a vedere che la signature riporta [DA FARE]
 
 Nella lista delle sezioni troviamo la sezione tls, la sua presenza potrebbe indicare che il malware ha incluso un controllo di anti-debug, questa cosa merita controlli approfonditi che faremo in seguito. E' presente anche una sezione risorse.
 
@@ -110,6 +110,7 @@ _HKCU\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\INTERNET SETTINGS\ZONES\1_ (e 2,
 Vengono cercate anche le chiavi _HKLM\SOFTWARE\MICROSOFT\CRYPTOGRAPHY\CONFIGURATION_ e _HKLM\SYSTEM\CONTROLSET001\CONTROL\COMPUTERNAME\ACTIVECOMPUTERNAME_ per leggere il guid ed il nome della macchina infettata.
 L'ultima chiave del registro da notare è _
 HKLM\System\CurrentControlSet\Control\NLS\Language_ per controllare la lingua del sistema.
+Accedendo a HKLM\System e a HKLM\Sam [TODO: da controllare] potrebbe anche effettuare il dump delle credenziali dell'utente.
 
 ### Creazione processi
 
