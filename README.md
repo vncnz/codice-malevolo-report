@@ -25,9 +25,11 @@ Spacchettiamo ora l'eseguibile utilizzando UPX e apriamo la versione spacchettat
 
 [![Seconda apertura con pestudio](./Screenshots/seconda-apertura-pestudio.png)]()
 
-Vediamo che il campo signature è ora vuoto. La data di compilazione sembra essere domenica 15 aprile 2012. Utilizzando il programma ExeInfo PE riusciamo a vedere che la signature riporta [TODO: inserire firma]
+Vediamo che il campo signature è ora vuoto. La data di compilazione sembra essere domenica 15 aprile 2012. 
+Utilizzando il programma ExeInfo PE ci viene data la seguente informazione: `Borland Delphi 2006/2007 - borland.com [ Downloader - Internet Behavior on ->> wsock32.dll` .
 
-Nella lista delle sezioni troviamo la sezione tls, la sua presenza potrebbe indicare che il malware ha incluso un controllo di anti-debug, questa cosa merita controlli approfonditi che faremo in seguito. E' presente anche una sezione risorse.
+Tornando a pestudio, nella lista delle sezioni troviamo la sezione TLS, la sua presenza potrebbe indicare che il malware ha incluso un controllo di anti-debug. TLS sta infatti per "Thread-Local Storage" e questa sezione può essere usata per permettere al programma di debuggare sé stesso, siccome un solo debugger alla volta può agire su un programma questo rende quantomeno complesso per un analista debuggare il malware.
+E' presente anche una sezione risorse.
 
 ### Risorse
 
@@ -109,7 +111,7 @@ _HKCU\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\INTERNET SETTINGS\ZONES\1_ (e 2,
 Vengono cercate anche le chiavi _HKLM\SOFTWARE\MICROSOFT\CRYPTOGRAPHY\CONFIGURATION_ e _HKLM\SYSTEM\CONTROLSET001\CONTROL\COMPUTERNAME\ACTIVECOMPUTERNAME_ per leggere il guid ed il nome della macchina infettata.
 L'ultima chiave del registro da notare è _
 HKLM\System\CurrentControlSet\Control\NLS\Language_ per controllare la lingua del sistema.
-Accedendo a HKLM\System e a HKLM\Sam [TODO: da controllare] potrebbe anche effettuare il dump delle credenziali dell'utente.
+Accedendo a HKLM\System potrebbe anche effettuare il dump delle credenziali dell'utente.
 
 ### Creazione processi
 
@@ -117,7 +119,7 @@ Il malware non avvia processi oltre a quello visto per la persistenza.
 
 ### Creazione file
 
-Il malware non scrive files oltre a quello visto per la persistenza.
+Il malware non scrive file oltre a quello visto per la persistenza.
 
 ## Analisi del traffico di rete
 
@@ -128,8 +130,6 @@ E' stato catturato molto traffico di rete dalla macchina in esame. Filtrando per
 E' stata catturata attività di rete anche all'indirizzo 0.0.0.0 .
 
 Non vengono effettuate connessioni di tipo SMTP.
-
-[TODO: ricontrollare la configurazione di inetsim e verificare se è corretto che non effettui altre richieste]
 
 ## Reverse engineering della funzione sub_4835DC
 
@@ -260,6 +260,8 @@ Il documento in analisi è un docx privo di macro e contenente una minaccia di t
 [![Verifica del formato](./Screenshots/docx-file.png)]()
 
 ## Analisi statica
+
+Per l'analisi di questo documento mi sono affidato alla macchina REMnux, con la sola eccezione dello screenshot di funzionamento che ho fatto con un Office installato su un sistema Windows 10.
 
 ### Stringhe
 
