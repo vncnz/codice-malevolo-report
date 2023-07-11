@@ -9,12 +9,9 @@ Come vedremo il malware analizzato crea un file eseguibile sulla macchina infett
 
 ### Informazioni generali ed impacchettamento
 
-[![Remnux file comand](./Screenshots/remnux-file.png)]()
+Come prima cosa scopriamo a che tipo di file ci stiamo approcciando.
 
-```
-remnux@remnux:~/Desktop$ file '/home/remnux/Desktop/malware/malware' 
-/home/remnux/Desktop/malware/malware: PE32 executable (GUI) Intel 80386, for MS Windows, UPX compressed
-```
+[![Remnux file comand](./Screenshots/remnux-file.png)]()
 
 Vediamo innanzitutto che si tratta di un eseguibile per Windows a 32 bit dotato di interfaccia grafica e impacchettato con UPX.
 Possiamo vedere l'impacchettamento tramite UPX anche aprendo il file con pestudio e verificando il campo signature.
@@ -42,8 +39,6 @@ Tra le risorse troviamo alcuni file Delphi.
 Quello che possiamo vedere prima di tutto è che il malware include diversi import di API di Windows che gli consentono di gestire connessioni di rete, recuperare alcune informazioni sull'hardware della macchina infetta, prendere informazioni sui monitor e sulla finestra correntemente visualizzata (e cambiarla), modificare le chiavi del registro di windows, creare/distruggere processi, leggere e scrivere la clipboard.
 Un import da notare è GetCapture, funzione che consente di catturare una porzione dello/gli schermo/i, questo è un indicatore del fatto che il malware potrebbe catturare degli screenshot ed inviarli ad un attaccante. Contiene anche una serie di API legate alla gestione delle risorse e questo può essere legato al fatto che nelle risorse abbiamo dei file Delphi. Non mancano API per la lettura e scrittura di chiavi del registro di Windows, così come GetTickCount che può risultare utile per tecniche di antidebugging visto che consente di accorgersi se l'esecuzione è step-by-step anziché "in tempo reale". Un'altra API utile al malware per proteggersi è Sleep che aiuta ad evadere il rilevamento da parte dell'antivirus.
 Ci sono anche API utili per le connessioni di rete e per l'allocazione della memoria, per la cattura dello stato della tastiera (il che può essere utile per un keylogger ad esempio) e possibilità di aggiungere, rimuovere e ricercare stringhe nella Atom Table (per salvare l'elenco di tasti premuti?), per la gestione di file su disco (ricerca, eliminazione, eccetera).
-
-[TODO: cercare le API qui riportate https://moodledidattica.univr.it/pluginfile.php/1231027/course/section/114897/reverse-engineering-malicious-code-tips.pdf]
 
 ### Stringhe
 
@@ -256,12 +251,10 @@ lpData viene ricavato da local_c che a sua volta deriva da param2 mentre lpValue
 Al di là dei dettagli, possiamo concludere con relativa sicurezza che la funzione `sub_4835DC` si occupa di ricevere in input un nome ed un valore e di scriverli nel registro di Windows alla chiave _HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run_.
 
 ---
----
----
 
 # IL DOCUMENTO MALEVOLO
 
-Il documento in analisi è un docx privo di macro e contenente una minaccia di tipo DDE che consentirebbe, se il relativo server fosse ancora attivo, il download di un malware sulla macchina della vittima.
+Il documento in analisi è un docx privo di macro e contenente una minaccia di tipo DDE che consentirebbe, se il relativo server fosse ancora attivo, il download di un malware sulla macchina della vittima. Di fatto, quindi, il docx è "soltanto" un downloader che permette di far arrivare la minaccia sul computer della vittima.
 
 # Verifica del formato del file
 
@@ -323,41 +316,7 @@ Per concludere possiamo aprire il documento in una macchina virtuale per vedere 
 
 [![screenshot](./Screenshots/docx-screenshot.png)]()
 
-================================================
-
-# Richieste per l'esame (sezione da eliminare)
-
-================================================
-
-# MALWARE
-## OK Analisi statica di base
-In questa sezione dovete riportare i risultati dell’analisi statica del PE del malware utilizzando tool quali PEstudio, ExeInfoPE or PEID. In particolare dovete rispondere alle seguenti domande:
-- OK Il malware e’ impacchettato? Se si quale packer e’ stato utilizzato? Quali  sono gli elementi del PE file che indicano che il malware e’ impacchettato?
-- OK Quali API vengono importate dal malware? Qual’e’ un possibile comportamento del malware in base alle API importate?
-- OK Quali stringhe sono contenute nel malware? Ci sono stringhe che possono che corrispondono a file o cartelle? Oppure sottochiavi del Windows registry? Oppure  URL? oppure indirizzi IP? 
-- OK? Alcune delle stringhe sono offuscate o cifrate? Quale codifica o algoritmo di cifratura viene utilizzato?
-## OK Analisi dinamica di base
-In questa sezione dovete riportare i risultati dell’analisi dinamica del malware utilizzando tools quali  Regshot, e ProcMon. In particolare dovete rispondere alle seguenti domande:
- 
-- OK Il malware crea o modifica chiavi o sottochiavi del Windows registry? Se si quali ?
-- OK Il malware crea o cancella cartelle o file sulla macchina virtuale? Se si quali?
-- OK Il malware crea qualche altro processo?
-- OK Il malware e’ persistente sulla macchina virtuale? Se si, quale tecnica utilizza per raggiungere persistenza?
-## ~OK Analisi del traffico di rete
-In questa sezione dovete riportare i risultati dell’analisi del traffico di rete con Wireshark e Inetsim. In particolare, dovete rispondere alle seguenti domande:
-OK - Il malware inizia connessioni di rete? Se si che tipo di traffico genera?  Quali URL or indirizzi IP tenta di contattare?
- 
-## Reverse engineering della funzione indicata
-In questa sezione dovete spiegare il comportamento della funzione assegnata determinato facendo il reverse engineering del codice con IDA, Ghidra e x32dbg.
-
-# ~OK IL DOCUMENTO MALEVOLO
-## ~OK Analisi statica
-In questa sezione dovete spiegare i risultati dell’analisi effettuata con strings (OK) , exiftool (OK), e yara (MANCA, fatto con msodde) Poi presentare i risultati ottenuti con i tool di analisi specifici per la tipologia di documento. Per esempio, se il documento è un pdf riportare i risultati ottenuti con pdfid, pdf-parser e peepdf.
- 
-## OK Analisi del codice malevolo contenuto nel documento
- 
-In questa sezione dovete spiegare il comportamento dell’eventuale codice malevolo contenuto all’interno del documento.
-
+Complice anche il contenuto testuale del file, l'utente viene spinto a credere che sia necessario scaricare delle risorse per poter visualizzare correttamente il documento permettendo così l'infezione della macchina.
 
 <style>
 @media print, (overflow-block: paged) or (overflow-block: optional-paged)
