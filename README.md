@@ -331,3 +331,11 @@ Complice anche il contenuto testuale del file, l'utente viene spinto a credere c
   }
 }
 </style>
+
+# Note post consegna
+
+## Malware
+
+L'indirizzo "0.0.0.0" e la stringa "listen" si possono trovare entrambe con strings su remnux. In più si trova anche una stringa "ERR|Cannot listen to port, try another one..|".
+Anche socket, wsastartup, bind e socket si possono trovare con strings.
+
